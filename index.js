@@ -1,4 +1,4 @@
-const Boom = require('Boom');
+const Boom = require('boom');
 
 const getError = (err)=>{
     let name = err.name || err;
