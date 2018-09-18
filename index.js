@@ -26,13 +26,16 @@ const getError = (err)=>{
     }
 };
 
-const errorsHandler = (uncleanError, req, res, next)=>{
-    let boomError = getError(uncleanError);
-    res.status(boomError.output.statusCode).json({
-        errors : {},
-        ...boomError.data,
-        ...boomError.output.payload
-    });
+const errorsHandler = (cb = ()=>{})=>{
+    return (uncleanError, req, res, next)=>{
+        let boomError = getError(uncleanError);
+        cb(uncleanError, boomError);
+        res.status(boomError.output.statusCode).json({
+            errors : {},
+            ...boomError.data,
+            ...boomError.output.payload
+        });
+    }
 };
 
 module.exports = errorsHandler;
